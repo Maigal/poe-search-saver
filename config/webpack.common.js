@@ -44,6 +44,18 @@ const common = {
         ],
       },
       {
+        test: /\.(woff(2)?|otf|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: 'fonts',
+              name: '[name].[ext]',
+            },
+          },
+        ],
+      },
+      {
         test: /\.js?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
