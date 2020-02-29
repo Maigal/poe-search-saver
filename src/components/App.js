@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { storage } from '../storage';
 
+
+
  const App = () => {
 
   const [data, setData] = useState([])
 
   const fetchData = async () => {
-    const res = await storage.get('groups')
+    const res = await storage.getData('groups')
       .then(res => res)
     return res
   }
@@ -25,12 +27,19 @@ import { storage } from '../storage';
       }
     ]
 
-    storage.save(nextState)
+    storage.saveData(nextState)
       .then(loadData())
   }
 
   useEffect(() => {
-    loadData()
+    fetchData()
+      .then(res => {
+        if (res) {
+          setData(res)
+        } else {
+          storage.initialize()
+        }
+      })
   }, [])
 
   return (

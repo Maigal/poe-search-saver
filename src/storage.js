@@ -1,15 +1,16 @@
+const initialStructure = {
+  groups: [],
+  config: {
+    colorMode: 'light',
+  }
+}
+
 export const storage = {
-  // sv: (data) => {
-  //   chrome.storage.local.set({ 'groups': data }, function () {
-  //     // const res =  chrome.storage.local.get([name])
-  //     // if (res) {
-  //     //     return res
-  //     // } else {
-  //     //     return null
-  //     // }
-  //   })
-  // },
-  save: (data => {
+  initialize: () => {
+    chrome.storage.local.set({ 'groups' : initialStructure.groups, 'config': initialStructure.config }, function () {
+    });
+  },
+  saveData: data => {
     return new Promise(function (resolve, reject) {
       chrome.storage.local.set({ 'groups' : data }, function () {
         if (chrome.runtime.lastError) {
@@ -21,8 +22,8 @@ export const storage = {
         }
       });
     });
-  }),
-  get: (key) => {
+  },
+  getData: (key) => {
     return new Promise(function (resolve, reject) {
       chrome.storage.local.get(key, function (items) {
         if (chrome.runtime.lastError) {
