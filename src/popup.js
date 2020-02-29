@@ -1,6 +1,6 @@
 'use strict';
 
-import './popup.css';
+import './popup.scss';
 import React from "react";
 import ReactDOM from "react-dom";
 
