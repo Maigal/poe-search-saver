@@ -1,5 +1,5 @@
 'use strict';
-
+import "@babel/polyfill";
 import './popup.scss';
 import React from "react";
 import ReactDOM from "react-dom";
