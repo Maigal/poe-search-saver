@@ -1,45 +1,51 @@
 import React, { useState, useEffect } from 'react'
 import { storage } from '../storage';
-
+import { Group } from './Group';
 
 
  const App = () => {
 
   const [data, setData] = useState([])
+  const [config, setConfig] = useState({})
 
-  const fetchData = async () => {
-    const res = await storage.getData('groups')
+  const fetchKey = async (key) => {
+    const res = await storage.getData(key)
       .then(res => res)
+
     return res
   }
 
-  const loadData = () => {
-    fetchData()
+  const loadGroups = () => {
+    fetchKey('groups')
       .then(res => setData(res))
   }
 
-  const addGroup = (title) => {
-    const nextState = [
-      ...data,
-      {
-        name: title,
-        elements: {}
-      }
-    ]
-
-    storage.saveData(nextState)
-      .then(loadData())
+  const loadConfig = () => {
+    fetchKey('config')
+      .then(res => setConfig(res))
   }
 
-  useEffect(() => {
-    fetchData()
-      .then(res => {
+
+  const initialize = async () => {
+    const dataGroups = await storage.getData('groups').then(res => {
         if (res) {
           setData(res)
         } else {
-          storage.initialize()
+          storage.initialize('groups', (groupsInfo) => setData(groupsInfo))
         }
       })
+
+    const dataConfig = await storage.getData('config').then(res => {
+        if (res) {
+          setConfig(res)
+        } else {
+          storage.initialize('config', (configInfo) => setData(configInfo))
+        }
+      })
+  }
+
+  useEffect(() => {
+    initialize()
   }, [])
 
   return (
@@ -47,11 +53,10 @@ import { storage } from '../storage';
       <button onClick={() => addGroup('prueboea')}>asd</button>
       <h1>POE Search Saver</h1>
       {
-        data.map((el, index) => {
+        data.map((gr, index) => {
+          console.log('data el', gr)
           return (
-            <div key={index}>
-              {el.name}
-            </div>
+            <Group key={gr.title} title={gr.title} links={gr.links} />
           )
         })
       }
