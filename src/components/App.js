@@ -50,11 +50,9 @@ import { Group } from './Group';
 
   return (
     <>
-      <button onClick={() => addGroup('prueboea')}>asd</button>
-      <h1>POE Search Saver</h1>
+      <header className="header">options</header>
       {
-        data.map((gr, index) => {
-          console.log('data el', gr)
+        data.map(gr => {
           return (
             <Group key={gr.title} title={gr.title} links={gr.links} />
           )

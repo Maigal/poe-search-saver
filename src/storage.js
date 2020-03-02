@@ -27,7 +27,6 @@ export const storage = {
           console.error(chrome.runtime.lastError.message);
           reject(chrome.runtime.lastError.message);
         } else {
-          console.log('resolvien2')
           resolve();
         }
       });

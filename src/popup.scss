@@ -1,3 +1,8 @@
+$dark: #1C313A;
+$middle: #455A64;
+$light: #E1E2E1;
+$lighter: #F5F5F6;
+
 @font-face {
   font-family: 'Fontin';
   src: url('./fonts/Fontin-SmallCaps.otf') format('opentype'),
@@ -22,7 +27,6 @@ html {
 
 html, body {
   min-width: 300px;
-  height: 300px;
   background: #FAFAFA;
   font-family: 'Fontin', sans-serif;
   position: relative;
@@ -32,27 +36,44 @@ html, body {
   position: relative;
   width: 100%;
   height: 100%;
+  background: $lighter;
+}
+
+.header {
+  padding: 5px;
+  background: $dark;
+  color: $lighter;
 }
 
 
-h1 {
-  color: #222;
-}
-
-
-.app {
-  height: 100%;
+.group {
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
-  text-align: center;
-  padding: 20px;
+  padding: 5px 5px 15px 5px;
+  background: $light;
+  border-left: 5px solid $middle;
+
+  &__title {
+    margin: 5px 0;
+    font-size: 18px;
+    color: $middle;
+  }
+
+  &__quick-add {
+    text-align: center;
+    font-size: 18px;
+    width: 100%;
+    background: gray;;
+  }
 }
 
-.content {
-  padding: 20px;
-  display: flex;
-  justify-items: center;
-  justify-content: center;
+.link {
+  padding: 5px;
+  border-radius: 2px;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  font-size: 16px;
+  color: $dark;
+  background: $lighter;
+  cursor: hover;
 }
