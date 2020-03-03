@@ -15,6 +15,14 @@ import { Group } from './Group';
     return res
   }
 
+  const saveKey = async (key, newData) => {
+    const res = await storage.saveData(key, newData)
+      .then(() => newData)
+      .catch(err => err)
+
+    return res
+  }
+
   const loadGroups = () => {
     fetchKey('groups')
       .then(res => setData(res))
@@ -44,17 +52,38 @@ import { Group } from './Group';
       })
   }
 
+  const renameGroup = (oldTitle, newTitle) => {
+    const newData = data.map(el => {
+      if (el.title === oldTitle) {
+        return {...el, title: newTitle}
+      }
+      return el
+    })
+
+    saveKey('groups', newData)
+      .then(res => {
+        setData(res)
+      })
+
+  }
+
   useEffect(() => {
     initialize()
   }, [])
 
   return (
     <>
-      <header className="header">options</header>
-      {
+      <header className="header">POE SEARCH SAVER</header>
+      {console.log('state', data)}
+      { data && 
         data.map(gr => {
           return (
-            <Group key={gr.title} title={gr.title} links={gr.links} />
+            <Group 
+              key={gr.title} 
+              title={gr.title} 
+              links={gr.links} 
+              renameGroup={(newTitle) => {renameGroup(gr.title, newTitle)}}
+            />
           )
         })
       }

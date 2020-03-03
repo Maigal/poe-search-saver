@@ -39,6 +39,10 @@ html, body {
   background: $lighter;
 }
 
+input {
+  font-family: 'Fontin', sans-serif;
+}
+
 .header {
   padding: 5px;
   background: $dark;
@@ -51,12 +55,32 @@ html, body {
   flex-direction: column;
   padding: 5px 5px 15px 5px;
   background: $light;
-  border-left: 5px solid $middle;
 
-  &__title {
+  &__header {
     margin: 5px 0;
     font-size: 18px;
     color: $middle;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  &__header-options {
+    margin-right: auto;
+  }
+
+  &__header-title {
+    flex-grow: 1;
+  }
+
+  &__header-rename-input {
+    background: transparent;
+    font-size: 18px;
+    color: $middle;
+    border: none;
+    display: flex;
+    justify-self: flex-start;
   }
 
   &__quick-add {
@@ -75,5 +99,5 @@ html, body {
   font-size: 16px;
   color: $dark;
   background: $lighter;
-  cursor: hover;
+  cursor: pointer;
 }
