@@ -64,7 +64,24 @@ import { Group } from './Group';
       .then(res => {
         setData(res)
       })
+  }
 
+  const addLink = (linkData, groupName) => {
+    console.log(linkData, groupName)
+    const newData = [...data].map(gr => {
+      if (gr.title === groupName) {
+        return {
+          ...gr,
+          links: [...gr.links, linkData]
+        }
+      }
+      return gr
+    })
+
+    saveKey('groups', newData)
+      .then(res => {
+        setData(res)
+      })
   }
 
   useEffect(() => {
@@ -74,7 +91,6 @@ import { Group } from './Group';
   return (
     <>
       <header className="header">POE SEARCH SAVER</header>
-      {console.log('state', data)}
       { data && 
         data.map(gr => {
           return (
@@ -83,6 +99,7 @@ import { Group } from './Group';
               title={gr.title} 
               links={gr.links} 
               renameGroup={(newTitle) => {renameGroup(gr.title, newTitle)}}
+              addLink={(linkData, groupName) => addLink(linkData, groupName)}
             />
           )
         })

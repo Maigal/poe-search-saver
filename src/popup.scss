@@ -82,22 +82,16 @@ input {
     display: flex;
     justify-self: flex-start;
   }
-
-  &__quick-add {
-    text-align: center;
-    font-size: 18px;
-    width: 100%;
-    background: gray;;
-  }
 }
 
 .link {
   padding: 5px;
   border-radius: 2px;
   box-shadow: 0 1px 1px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   font-size: 16px;
   color: $dark;
   background: $lighter;
   cursor: pointer;
+  margin: 3px 0;
+  min-height: 27px;
 }
