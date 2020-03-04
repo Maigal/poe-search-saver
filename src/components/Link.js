@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import iconEdit from '../images/icon-edit.svg';
+import iconTrash from '../images/icon-trash.svg';
+import iconTick from '../images/icon-tick.svg';
 
 export const Link = ({url, name, editLinkName}) => {
 
@@ -15,7 +18,9 @@ export const Link = ({url, name, editLinkName}) => {
     return (
       <div className="link-form">
         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-        <button onClick={() => renameLink()} >Submit</button>
+        <button className="btn-edit" onClick={() => renameLink()} >
+          <img src={iconTick} alt=""/>
+        </button>
       </div>
     )
   }
@@ -27,8 +32,12 @@ export const Link = ({url, name, editLinkName}) => {
     >
       <div className="link__title" onClick={() => chrome.tabs.create({url: url, active: true})}>{name}</div>
       <div className="link__actions">
-        <button onClick={() => setIsEditing(true)}>E</button>
-        <button>X</button>
+        <button className="btn-edit" onClick={() => setIsEditing(true)}>
+          <img src={iconEdit} alt=""/>
+        </button>
+        <button className="btn-danger">
+          <img src={iconTrash} alt=""/>
+        </button>
       </div>
       
     </div>
