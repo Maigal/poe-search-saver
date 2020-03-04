@@ -23,17 +23,6 @@ import { Group } from './Group';
     return res
   }
 
-  const loadGroups = () => {
-    fetchKey('groups')
-      .then(res => setData(res))
-  }
-
-  const loadConfig = () => {
-    fetchKey('config')
-      .then(res => setConfig(res))
-  }
-
-
   const initialize = async () => {
     const dataGroups = await storage.getData('groups').then(res => {
         if (res) {
@@ -47,7 +36,7 @@ import { Group } from './Group';
         if (res) {
           setConfig(res)
         } else {
-          storage.initialize('config', (configInfo) => setData(configInfo))
+          storage.initialize('config', (configInfo) => setConfig(configInfo))
         }
       })
   }
@@ -59,15 +48,9 @@ import { Group } from './Group';
       }
       return el
     })
-
-    saveKey('groups', newData)
-      .then(res => {
-        setData(res)
-      })
   }
 
   const addLink = (linkData, groupName) => {
-    console.log(linkData, groupName)
     const newData = [...data].map(gr => {
       if (gr.title === groupName) {
         return {
@@ -79,15 +62,22 @@ import { Group } from './Group';
     })
 
     saveKey('groups', newData)
-      .then(res => {
-        setData(res)
-      })
   }
+
+  chrome.storage.local.onChanged.addListener(function({groups, config}) {
+    if (groups && groups.newValue) {
+      setData(groups.newValue)
+    }
+    if (config && config.newValue) {
+      setConfig(config.newValue)
+    }
+    
+  });
 
   useEffect(() => {
     initialize()
   }, [])
-
+  
   return (
     <>
       <header className="header">POE SEARCH SAVER</header>
