@@ -64,6 +64,29 @@ import { Group } from './Group';
     saveKey('groups', newData)
   }
 
+  const editLink = (oldLinkName, newLinkName, groupName) => {
+    const newData = data.map(gr => {
+      if (gr.title === groupName) {
+        const gLinks = gr.links.map(lnk => {
+          if (lnk.name === oldLinkName) {
+            return {
+              ...lnk,
+              name: newLinkName
+            }
+          }
+          return lnk
+        })
+        return {
+          ...gr,
+          links: gLinks
+        }
+      }
+      return gr
+    })
+
+    saveKey('groups', newData)
+  }
+
   chrome.storage.local.onChanged.addListener(function({groups, config}) {
     if (groups && groups.newValue) {
       setData(groups.newValue)
@@ -77,7 +100,7 @@ import { Group } from './Group';
   useEffect(() => {
     initialize()
   }, [])
-  
+
   return (
     <>
       <header className="header">POE SEARCH SAVER</header>
@@ -90,6 +113,7 @@ import { Group } from './Group';
               links={gr.links} 
               renameGroup={(newTitle) => {renameGroup(gr.title, newTitle)}}
               addLink={(linkData, groupName) => addLink(linkData, groupName)}
+              onEditLinkName={(oldLinkName, newLinkName, groupName) => editLink(oldLinkName, newLinkName, groupName)}
             />
           )
         })

@@ -3,7 +3,7 @@ import { Link } from './Link'
 import { getCurrentUrl } from '../navigation'
 import { NewLink } from './NewLink'
 
-export const Group = ({title, links, renameGroup, addLink}) => {
+export const Group = ({title, links, renameGroup, addLink, onEditLinkName}) => {
 
   const [isOpen, setOpen] = useState(true)
   const [isRenaming, setRenaming] = useState(false)
@@ -58,7 +58,7 @@ export const Group = ({title, links, renameGroup, addLink}) => {
       </h3>
       { isOpen && 
         links.map(link => (
-          <Link key={link.url} url={link.url} name={link.name}></Link>
+          <Link key={link.url} url={link.url} name={link.name} editLinkName={(oldName, newName) => onEditLinkName(oldName, newName, title)}></Link>
         ))
       }
       {

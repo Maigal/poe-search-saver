@@ -12,17 +12,17 @@ $lighter: #F5F5F6;
 }
 
 
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 html {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
   color: #222;
+  box-sizing: border-box;
+}
+
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
 }
 
 html, body {
@@ -30,6 +30,8 @@ html, body {
   background: #FAFAFA;
   font-family: 'Fontin', sans-serif;
   position: relative;
+  margin: 0;
+  padding: 0;
 }
 
 #root {
@@ -85,7 +87,7 @@ input {
 }
 
 .link {
-  padding: 5px;
+  
   border-radius: 2px;
   box-shadow: 0 1px 1px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   font-size: 16px;
@@ -94,4 +96,63 @@ input {
   cursor: pointer;
   margin: 3px 0;
   min-height: 27px;
+  display: flex;
+  align-items: center;
+  transition: .2s all ease;
+
+  &__title {
+    flex-grow: 1;
+    padding: 5px;
+  }
+
+  &__actions {
+    margin-right: auto;
+    opacity: 0;
+    height: 100%;
+
+    button {
+      padding: 5px;
+      height: 100%;
+      cursor: pointer;
+    }
+  }
+}
+
+.link:hover {
+  opacity: 0.8;
+
+  .link__actions {
+    opacity: 1;
+  }
+}
+
+.link-form {
+  border-radius: 2px;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  font-size: 16px;
+  color: $dark;
+  background: $lighter;
+  cursor: pointer;
+  margin: 3px 0;
+  min-height: 27px;
+  display: flex;
+  align-items: center;
+
+  input[type=text] {
+    flex-grow: 1;
+    background: none;
+    border: none;
+    font-size: 16px;
+    padding: 5px;
+  }
+
+  button {
+    padding: 5px;
+    height: 100%;
+    background: $dark;
+    color: $lighter;
+    cursor: pointer;
+    border: none;
+    min-height: 27px;
+  }
 }
