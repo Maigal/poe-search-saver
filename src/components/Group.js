@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Link } from './Link'
 import { getCurrentUrl } from '../navigation'
 import { NewLink } from './NewLink'
+import iconAdd from '../images/icon-add.svg';
+
 
 export const Group = ({title, links, renameGroup, addLink, onEditLinkName}) => {
 
@@ -43,7 +45,6 @@ export const Group = ({title, links, renameGroup, addLink, onEditLinkName}) => {
   return (
     <div className="group">
       <h3 className="group__header">
-        <span>{isOpen ? '-' : '+'}</span>
         <span className="group__header-title">
         {
           isRenaming 
@@ -52,8 +53,9 @@ export const Group = ({title, links, renameGroup, addLink, onEditLinkName}) => {
         }
         </span>
         <span className="group__header-options">
-          <button>Copy</button>
-          <button disabled={!canAddElement} onClick={() => getCurrentUrl(createLink)}>Add</button>
+          <span className="group__header-add" disabled={!canAddElement} onClick={() => getCurrentUrl(createLink)}>
+            <img className="icon-add" src={iconAdd} alt="Add current url"/>
+          </span>
         </span>
       </h3>
       { isOpen && 
