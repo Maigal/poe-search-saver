@@ -41,13 +41,36 @@ import { Group } from './Group';
       })
   }
 
+  const addGroup = () => {
+    let groupname;
+    let ind = data.length;
+    do {
+      groupname = 'Group ' + ind;
+    } while (data.find(el => el.name === groupname))
+
+    const newGroup  = {
+      title: groupname,
+      links: []
+    }
+
+    saveKey('groups', [...data, newGroup])
+  }
+
   const renameGroup = (oldTitle, newTitle) => {
-    const newData = data.map(el => {
-      if (el.title === oldTitle) {
-        return {...el, title: newTitle}
-      }
-      return el
-    })
+    console.log(oldTitle, newTitle, data)
+    if (oldTitle !== newTitle && !data.find(el => el.title.toUpperCase() === newTitle.toUpperCase())) {
+      const newData = data.map(el => {
+        if (el.title === oldTitle) {
+          return {...el, title: newTitle}
+        }
+        return el
+      })
+  
+      saveKey('groups', newData)
+    } else {
+      console.warn('Titles must change')
+    }
+    
   }
 
   const addLink = (linkData, groupName) => {
@@ -118,6 +141,11 @@ import { Group } from './Group';
           )
         })
       }
+      <div className="group-adder">
+        <div className="group-adder__trigger" onClick={() => addGroup()}>
+          Add group
+        </div>
+      </div>
     </>
   )
 }

@@ -197,3 +197,37 @@ input {
 .btn-edit {
   background: #28a745;
 }
+
+.group-adder {
+  height: 20px;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(0deg, rgba(69,90,100,1) 0%, rgba(225,226,225,1) 43%);
+  cursor: pointer;
+  
+  &__trigger {
+    height: 0;
+    transition: .3s all ease;
+    background: $middle;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-size: 18px;
+    padding: 0;
+    text-align: center;
+  }
+}
+
+.group-adder:hover {
+
+  .group-adder__trigger {
+    transition: .3s all ease;
+    display: block;
+    height: 25px;
+    padding: 5px 0;
+    color: #FAFAFA;
+    text-align: center;
+    cursor: pointer;
+  }
+}

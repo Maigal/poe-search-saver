@@ -53,8 +53,8 @@ export const Group = ({title, links, renameGroup, addLink, onEditLinkName}) => {
         }
         </span>
         <span className="group__header-options">
-          <span className="group__header-add" disabled={!canAddElement} onClick={() => getCurrentUrl(createLink)}>
-            <img className="icon-add" src={iconAdd} alt="Add current url"/>
+          <span className="group__header-add" onClick={() => getCurrentUrl(createLink)}>
+            {canAddElement && <img className="icon-add" src={iconAdd} alt="Add current url"/>}
           </span>
         </span>
       </h3>
