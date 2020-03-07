@@ -1,7 +1,7 @@
 {
   "name": "poe-search-saver",
   "version": "0.1.0",
-  "description": "My First React Chrome Extension",
+  "description": "Path of exile search saver",
   "private": true,
   "scripts": {
     "start": "webpack --mode=development --watch --config config/webpack.config.js",

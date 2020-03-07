@@ -3,11 +3,14 @@ import { Link } from './Link'
 import { getCurrentUrl } from '../navigation'
 import { NewLink } from './NewLink'
 import iconAdd from '../images/icon-add.svg';
+import iconCross from '../images/icon-cross.svg';
+import iconHamburger from '../images/icon-hamburger.svg';
 
 
-export const Group = ({title, links, renameGroup, addLink, onEditLinkName, onLinkDragStart, onDrop}) => {
+export const Group = ({title, links, renameGroup, deleteGroup, addLink, onEditLinkName, onLinkDragStart, onDrop}) => {
 
   const [isOpen, setOpen] = useState(true)
+  const [isMenuOpen, setMenuOpen] = useState(false)
   const [isRenaming, setRenaming] = useState(false)
   const [newElement, setNewElement] = useState(null)
   const [canAddElement, setCanAddElement] = useState(true)
@@ -56,6 +59,19 @@ export const Group = ({title, links, renameGroup, addLink, onEditLinkName, onLin
           <span className="group__header-add" onClick={() => getCurrentUrl(createLink)}>
             {canAddElement && <img className="icon-add" src={iconAdd} alt="Add current url"/>}
           </span>
+          <span className={`group__header-menu ${isMenuOpen ? 'expanded' : ''}`}>
+          {
+            isMenuOpen ?
+              <>
+              <img className="icon-menu" src={iconCross} alt="Group menu" onClick={() => setMenuOpen(!isMenuOpen)} />
+              <div className="header-menu__content">
+                <div onClick={() => deleteGroup(title)}>Delete group</div>
+              </div>
+              </>
+            : <img className="icon-menu" src={iconHamburger} alt="Group menu" onClick={() => setMenuOpen(!isMenuOpen)} />
+          }
+            
+          </span>
         </span>
       </h3>
       { isOpen && 
@@ -72,7 +88,7 @@ export const Group = ({title, links, renameGroup, addLink, onEditLinkName, onLin
           </React.Fragment>
         ))
       }
-      <div onDragOver={e => e.preventDefault()} onDrop={e => onDrop(links.length, title)} style={{height: '5px'}} ></div>
+      <div onDragOver={e => e.preventDefault()} onDrop={e => onDrop(links.length, title)} style={{height: '10px'}} ></div>
       {
         newElement && 
         <NewLink currentLinks={links} submitLink={(name => onSubmitLink(name))}></NewLink>

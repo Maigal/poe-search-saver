@@ -58,7 +58,6 @@ import { Group } from './Group';
   }
 
   const renameGroup = (oldTitle, newTitle) => {
-    console.log(oldTitle, newTitle, data)
     if (oldTitle !== newTitle && !data.find(el => el.title.toUpperCase() === newTitle.toUpperCase())) {
       const newData = data.map(el => {
         if (el.title === oldTitle) {
@@ -72,6 +71,12 @@ import { Group } from './Group';
       console.warn('Titles must change')
     }
     
+  }
+
+  const deleteGroup = (groupTitle) => {
+    const newGroups = data.filter(gr => gr.title !== groupTitle)
+
+    saveKey('groups', newGroups)
   }
 
   const addLink = (linkData, groupName) => {
@@ -142,7 +147,7 @@ import { Group } from './Group';
           }
           return gr
         })
-        setData(newData)
+        saveKey('groups', newData)
     } else {
       const targetLink = data.find(gr => gr.title === groupTitle).links.find(lk => lk.name === lastDraggedLink.lName && lk.url === lastDraggedLink.lUrl)
       if (!targetLink) {
@@ -163,7 +168,7 @@ import { Group } from './Group';
           }
           return gr
         })
-        setData(newData)
+        saveKey('groups', newData)
       }
     }
     setLastDraggedLink(null)
@@ -183,7 +188,8 @@ import { Group } from './Group';
               key={gr.title} 
               title={gr.title} 
               links={gr.links} 
-              renameGroup={(newTitle) => {renameGroup(gr.title, newTitle)}}
+              renameGroup={(newTitle) => renameGroup(gr.title, newTitle)}
+              deleteGroup={(groupTitle) => deleteGroup(groupTitle)}
               addLink={(linkData, groupName) => addLink(linkData, groupName)}
               onEditLinkName={(oldLinkName, newLinkName, groupName) => editLink(oldLinkName, newLinkName, groupName)}
               onLinkDragStart={(linkUrl, linkName, groupTitle) => onLinkDragStart(linkUrl, linkName, groupTitle)}

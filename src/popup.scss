@@ -66,9 +66,39 @@ input {
     align-items: center;
     width: 100%;
     justify-content: flex-start;
+    position: relative;
 
     &-add {
       cursor: pointer;
+    }
+  }
+
+  &__header-menu {
+    position: relative;
+    top: 0;
+    right: 0;
+
+
+    .header-menu__content {
+      z-index: 999;
+      position: absolute;
+      min-width: 150px;
+      text-align: center;
+      top: 20px;
+      right: 0;
+      background: #FAFAFA;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 1px 1px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+
+      div {
+        padding: 5px;
+        cursor: pointer;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
     }
   }
 
@@ -181,7 +211,7 @@ input {
   }
 }
 
-.icon-add {
+.icon-add, .icon-menu {
   margin-right: 10px;
   margin-top: 5px;
   height: 20px;
