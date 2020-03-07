@@ -5,7 +5,7 @@ import { NewLink } from './NewLink'
 import iconAdd from '../images/icon-add.svg';
 
 
-export const Group = ({title, links, renameGroup, addLink, onEditLinkName}) => {
+export const Group = ({title, links, renameGroup, addLink, onEditLinkName, onLinkDragStart, onDrop}) => {
 
   const [isOpen, setOpen] = useState(true)
   const [isRenaming, setRenaming] = useState(false)
@@ -59,10 +59,20 @@ export const Group = ({title, links, renameGroup, addLink, onEditLinkName}) => {
         </span>
       </h3>
       { isOpen && 
-        links.map(link => (
-          <Link key={link.url} url={link.url} name={link.name} editLinkName={(oldName, newName) => onEditLinkName(oldName, newName, title)}></Link>
+        links.map((link, linkIndex) => (
+          <React.Fragment key={link.url + linkIndex}>
+            <div key={`${title}-${linkIndex}`} className={linkIndex} onDragOver={e => e.preventDefault()} onDrop={e => onDrop(linkIndex, title)} style={{height: '5px'}} ></div>
+            <Link 
+              key={link.url} 
+              url={link.url} 
+              name={link.name} 
+              editLinkName={(oldName, newName) => onEditLinkName(oldName, newName, title)}
+              onDragStart={(linkUrl, linkName) => onLinkDragStart(linkUrl, linkName, title)}
+            />
+          </React.Fragment>
         ))
       }
+      <div onDragOver={e => e.preventDefault()} onDrop={e => onDrop(links.length, title)} style={{height: '5px'}} ></div>
       {
         newElement && 
         <NewLink currentLinks={links} submitLink={(name => onSubmitLink(name))}></NewLink>

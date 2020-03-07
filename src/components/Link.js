@@ -3,7 +3,7 @@ import iconEdit from '../images/icon-edit.svg';
 import iconTrash from '../images/icon-trash.svg';
 import iconTick from '../images/icon-tick.svg';
 
-export const Link = ({url, name, editLinkName}) => {
+export const Link = ({url, name, editLinkName, onDragStart, onDragEnd}) => {
 
   const [isEditing, setIsEditing] = useState(false)
   const [title, setTitle] = useState(name)
@@ -34,6 +34,8 @@ export const Link = ({url, name, editLinkName}) => {
     <div 
       className="link" 
       key={url} 
+      draggable 
+      onDragStart={() => onDragStart(url, name)}
     >
       <div title={url} className="link__title" onClick={() => chrome.tabs.create({url: url, active: true})}>{name}</div>
       <div className="link__actions">

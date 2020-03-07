@@ -7,6 +7,7 @@ import { Group } from './Group';
 
   const [data, setData] = useState([])
   const [config, setConfig] = useState({})
+  const [lastDraggedLink, setLastDraggedLink] = useState(null)
 
   const fetchKey = async (key) => {
     const res = await storage.getData(key)
@@ -120,6 +121,54 @@ import { Group } from './Group';
     
   });
 
+  const onLinkDragStart = (linkUrl, linkName, groupTitle) => {
+    setLastDraggedLink({lUrl: linkUrl, lName: linkName, gTitle: groupTitle})
+  }
+
+  const onLinkDrop = (linkIndex, groupTitle) => {
+    if (groupTitle === lastDraggedLink.gTitle) {
+        const newData = [...data].map(gr => {
+          if (gr.title === groupTitle) {
+            const prevIndex = gr.links.findIndex(lk => lk.url === lastDraggedLink.lUrl)
+            let newLinks = [...gr.links]
+            let _el = newLinks[prevIndex]
+            newLinks.splice(prevIndex, 1);
+            newLinks.splice(linkIndex, 0, _el);
+
+            return {
+              ...gr,
+              links: newLinks
+            }
+          }
+          return gr
+        })
+        setData(newData)
+    } else {
+      const targetLink = data.find(gr => gr.title === groupTitle).links.find(lk => lk.name === lastDraggedLink.lName && lk.url === lastDraggedLink.lUrl)
+      if (!targetLink) {
+        const newData = [...data].map(gr => {
+          if (gr.title === lastDraggedLink.gTitle) {
+            gr = {
+              ...gr,
+              links: gr.links.filter(lk => lk.url !== lastDraggedLink.lUrl)
+            }
+          }
+          if (gr.title === groupTitle) {
+            const newGroupLinks = gr.links;
+            newGroupLinks.splice(linkIndex, 0, {url: lastDraggedLink.lUrl, name: lastDraggedLink.lName})
+            return {
+              title: gr.title,
+              links: newGroupLinks
+            }
+          }
+          return gr
+        })
+        setData(newData)
+      }
+    }
+    setLastDraggedLink(null)
+  }
+
   useEffect(() => {
     initialize()
   }, [])
@@ -137,6 +186,8 @@ import { Group } from './Group';
               renameGroup={(newTitle) => {renameGroup(gr.title, newTitle)}}
               addLink={(linkData, groupName) => addLink(linkData, groupName)}
               onEditLinkName={(oldLinkName, newLinkName, groupName) => editLink(oldLinkName, newLinkName, groupName)}
+              onLinkDragStart={(linkUrl, linkName, groupTitle) => onLinkDragStart(linkUrl, linkName, groupTitle)}
+              onDrop={(linkIndex, groupTitle) => onLinkDrop(linkIndex, groupTitle)}
             />
           )
         })
